@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">apiPaymentApp</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="numWidgets">numWidgets</string>
+    <string name="numberOfWidgets">"Widgets:  "</string>
+    <string name="donationAmount">"Donation: "</string>
+    <string name="totalAmount">"Total: "</string>
+    <string name="addWidgetText">ADD WIDGET ($1.07)</string>
+
+</resources>

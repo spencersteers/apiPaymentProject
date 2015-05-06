@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#000000"
+    android:orientation="vertical" >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:id="@+id/detailText"
+        android:textColor="#e4e4e4" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Care to donate?"
+        android:id="@+id/textView2"
+        android:textColor="#e4e4e4" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Select a charity and we will donate the rounded up amount"
+        android:id="@+id/donateDetailText"
+        android:textColor="#c4c4c4" />
+
+    <Button
+        android:id="@+id/charityButton1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:text="@string/charity1"
+        android:background="@drawable/buttonselected"
+        style="@style/white_button_text" />
+
+    <Button
+        android:id="@+id/charityButton2"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:text="@string/charity2"
+        android:background="@drawable/buttonselected"
+        style="@style/white_button_text" />
+
+    <Button
+        android:id="@+id/charityButton3"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:text="@string/charity3"
+        android:background="@drawable/buttonselected"
+        style="@style/white_button_text" />
+
+    <Button
+        android:id="@+id/charityButton4"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:text="@string/charity4"
+        android:background="@drawable/buttonselected"
+        style="@style/white_button_text" />
+
+    <Button
+        android:id="@+id/charityButton5"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:text="@string/charity5"
+        android:background="@drawable/buttonselected"
+        style="@style/white_button_text" />
+
+    <Button
+        android:id="@+id/payButton"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:text="@string/pay"
+        android:background="@drawable/pay_button"
+        style="@style/green_button_text" />
+
+</LinearLayout>

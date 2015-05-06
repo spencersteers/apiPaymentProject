@@ -3,7 +3,7 @@
 
     <string name="app_name">WeedPay</string>
     <string name="hello_world">Hello world!</string>
-    <string name="donationAmount">"Donation: "</string>
+    <string name="donationAmount">"Total Donated: "</string>
     <string name="totalAmount">"Total: "</string>
     <string name="chocolate">Chocolate ($18.64)</string>
     <string name="oil">Oil ($27.97)</string>
@@ -16,5 +16,7 @@
     <string name="charity4">LEAP.cc</string>
     <string name="charity5">November.org</string>
     <string name="pay">Pay</string>
+    <string name="title_activity_pay">PayActivity</string>
+    <string name="action_settings">Settings</string>
 
 </resources>

@@ -3,14 +3,20 @@ package com.example.apipaymentapp;
 import java.text.DecimalFormat;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
-public class MainActivity extends Activity {
-	
+import com.example.apipaymentapp.Content.Products;
+
+public class MainActivity extends Activity implements View.OnClickListener {
+
+    private static final int PAY_REQUEST = 1;
+
 	static double chocolate;
     static double oil;
     static double eighth;
@@ -20,10 +26,17 @@ public class MainActivity extends Activity {
 
     static int numWidgets;
     static double widgetPrice;
-	
+
+    private Button button1;
+    private Button button2;
+    private Button button3;
+    private Button button4;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-    	
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
     	//Supposed to use BigDouble to represent money but #yolo
     	chocolate = 18.64;
         oil = 27.97;
@@ -31,49 +44,48 @@ public class MainActivity extends Activity {
         quarter = 93.24;
         donationAmount = 0.00;
         totalAmount = 0.00;
-        
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+
+        button1 = (Button)findViewById(R.id.button1);
+        button2 = (Button)findViewById(R.id.button2);
+        button3 = (Button)findViewById(R.id.button3);
+        button4 = (Button)findViewById(R.id.button4);
+
+        button1.setOnClickListener(this);
+        button2.setOnClickListener(this);
+        button3.setOnClickListener(this);
+        button4.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View v) {
+        Intent intent = new Intent(this, PayActivity.class);
+        if(v == button1) {
+            intent.putExtra("productIndex", 0);
+        }
+        else if(v == button2) {
+            intent.putExtra("productIndex", 1);
+        }
+        else if (v == button3) {
+            intent.putExtra("productIndex", 2);
+        }
+        else if (v == button4) {
+            intent.putExtra("productIndex", 3);
+        }
+        startActivityForResult(intent, PAY_REQUEST);
+    }
+
+    @Override
+    protected void onActivityResult(int aRequestCode, int aResultCode, Intent aData) {
+        updateTotal();
+        super.onActivityResult(aRequestCode, aResultCode, aData);
     }
     
-    public void updateValues()
+    public void updateTotal()
     {
     	DecimalFormat df = new DecimalFormat("#.00");
 
-    	TextView widgetText = (TextView) findViewById(R.id.textView1);
-    	widgetText.setText("Widgets:  " + numWidgets);
-
-    	TextView donationText = (TextView) findViewById(R.id.TextView03);
-    	donationText.setText("Donation: $" + df.format(donationAmount));
-    	
-    	TextView totalText = (TextView) findViewById(R.id.TextView02);
-    	totalText.setText("Total: $" + df.format(totalAmount));
-    }
-    
-    public void addWidgetClicked(View v)
-    {
-    	numWidgets ++;
-    	totalAmount = (numWidgets * widgetPrice) + donationAmount;
-    	
-    	updateValues();
-    	
-    }
-    
-    public void donateClicked(View v)
-    {
-    	totalAmount = (numWidgets * widgetPrice);	//clears previous donation from total
-
-    	int nextDollar = 0;
-
-    	nextDollar = (int)totalAmount + 1;	//Bugs on x.00
-    	
-    	donationAmount = (double) nextDollar - totalAmount;
-    	
-    	totalAmount = (numWidgets * widgetPrice) + donationAmount;
-    	
-    	updateValues();
-    	
-    	
+    	TextView totalDonationsText = (TextView) findViewById(R.id.totalDonationsText);
+        totalDonationsText.setText("Total Donated: " + df.format(Globals.totalDonations));
     }
     
     public void payClicked(View v)

@@ -2,22 +2,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="#000000"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:background="#f7f7f7"
+    android:longClickable="false">
 
     <TextView
-        android:id="@+id/TextView02"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/button3"
-        android:layout_alignParentLeft="true"
-        android:layout_alignRight="@+id/textView1"
-        android:layout_marginBottom="60dp"
-        android:text="@string/totalAmount"
-        android:textSize="20dp" />
-
-    <TextView
-        android:id="@+id/TextView03"
+        android:id="@+id/totalDonationsText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/TextView02"
@@ -32,7 +22,6 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:onClick="addWidgetClicked"
         android:text="@string/chocolate"
         android:background="@drawable/grey_button"
         style="@style/white_button_text" />
@@ -43,7 +32,6 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:text="@string/oil"
-        android:onClick="addWidgetClicked"
         android:background="@drawable/grey_button"
         style="@style/white_button_text" />
 
@@ -53,19 +41,18 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:text="@string/eighth"
-        android:onClick="addWidgetClicked"
         android:background="@drawable/grey_button"
         style="@style/white_button_text" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/button4"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:text="@string/quarter"
-        android:onClick="addWidgetClicked"
         android:background="@drawable/grey_button"
-        style="@style/white_button_text" />
+        style="@style/white_button_text"
+        android:enabled="true" />
 
 </LinearLayout>
 

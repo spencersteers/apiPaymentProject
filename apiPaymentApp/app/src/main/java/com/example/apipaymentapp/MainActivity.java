@@ -17,6 +17,9 @@ public class MainActivity extends Activity {
     static double quarter;
 	static double donationAmount;
 	static double totalAmount;
+
+    static int numWidgets;
+    static double widgetPrice;
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {

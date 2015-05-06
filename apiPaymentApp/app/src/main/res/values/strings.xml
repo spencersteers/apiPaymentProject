@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">WeedPay</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="donationAmount">"Donation: "</string>
+    <string name="totalAmount">"Total: "</string>
+    <string name="chocolate">Chocolate ($18.64)</string>
+    <string name="oil">Oil ($27.97)</string>
+    <string name="eighth">Eighth ($55.94)</string>
+    <string name="quarter">Quarter ($93.24)</string>
+
+    <string name="charity1">MPP.org</string>
+    <string name="charity2">NORML.org</string>
+    <string name="charity3">SafeAccessNow.org</string>
+    <string name="charity4">LEAP.cc</string>
+    <string name="charity5">November.org</string>
+    <string name="pay">Pay</string>
+
+</resources>

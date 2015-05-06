@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#000000"
+    android:orientation="vertical" >
+
+    <Button
+        android:id="@+id/charity1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:onClick="addWidgetClicked"
+        android:text="@string/charity1"
+        android:background="@drawable/grey_button"
+        style="@style/white_button_text" />
+
+    <Button
+        android:id="@+id/charity2"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:text="@string/charity2"
+        android:onClick="addWidgetClicked"
+        android:background="@drawable/grey_button"
+        style="@style/white_button_text" />
+
+    <Button
+        android:id="@+id/charity3"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:text="@string/charity3"
+        android:onClick="addWidgetClicked"
+        android:background="@drawable/grey_button"
+        style="@style/white_button_text" />
+
+    <Button
+        android:id="@+id/charity4"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:text="@string/charity4"
+        android:onClick="addWidgetClicked"
+        android:background="@drawable/grey_button"
+        style="@style/white_button_text" />
+
+    <Button
+        android:id="@+id/charity5"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:text="@string/charity5"
+        android:onClick="addWidgetClicked"
+        android:background="@drawable/grey_button"
+        style="@style/white_button_text" />
+
+    <Button
+        android:id="@+id/pay"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:text="@string/pay"
+        android:onClick="addWidgetClicked"
+        android:background="@drawable/pay_button"
+        style="@style/green_button_text" />
+
+</LinearLayout>

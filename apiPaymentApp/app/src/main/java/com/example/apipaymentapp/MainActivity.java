@@ -11,8 +11,10 @@ import android.widget.TextView;
 
 public class MainActivity extends Activity {
 	
-	static double widgetPrice;
-	static int numWidgets;
+	static double chocolate;
+    static double oil;
+    static double eighth;
+    static double quarter;
 	static double donationAmount;
 	static double totalAmount;
 	
@@ -20,8 +22,10 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
     	
     	//Supposed to use BigDouble to represent money but #yolo
-    	widgetPrice = 1.07;
-        numWidgets = 0;
+    	chocolate = 18.64;
+        oil = 27.97;
+        eighth = 55.94;
+        quarter = 93.24;
         donationAmount = 0.00;
         totalAmount = 0.00;
         
@@ -32,10 +36,10 @@ public class MainActivity extends Activity {
     public void updateValues()
     {
     	DecimalFormat df = new DecimalFormat("#.00");
-    	
+
     	TextView widgetText = (TextView) findViewById(R.id.textView1);
     	widgetText.setText("Widgets:  " + numWidgets);
-    	
+
     	TextView donationText = (TextView) findViewById(R.id.TextView03);
     	donationText.setText("Donation: $" + df.format(donationAmount));
     	
@@ -55,9 +59,9 @@ public class MainActivity extends Activity {
     public void donateClicked(View v)
     {
     	totalAmount = (numWidgets * widgetPrice);	//clears previous donation from total
-    	
+
     	int nextDollar = 0;
-    	
+
     	nextDollar = (int)totalAmount + 1;	//Bugs on x.00
     	
     	donationAmount = (double) nextDollar - totalAmount;

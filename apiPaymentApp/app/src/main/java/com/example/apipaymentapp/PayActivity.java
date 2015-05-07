@@ -3,6 +3,7 @@ package com.example.apipaymentapp;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -10,8 +11,17 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.apipaymentapp.Content.Products;
+import com.mashape.unirest.http.HttpResponse;
+import com.mashape.unirest.http.JsonNode;
+import com.mashape.unirest.http.Unirest;
+
+import org.json.JSONObject;
 
 import java.text.DecimalFormat;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.FutureTask;
 
 
 public class PayActivity extends Activity implements View.OnClickListener {
@@ -54,11 +64,11 @@ public class PayActivity extends Activity implements View.OnClickListener {
         roundedPrice = Math.ceil(p.price);
         donationPrice = roundedPrice - productPrice;
 
-        DecimalFormat df = new DecimalFormat("#0.00");
+        DecimalFormat df = new DecimalFormat("'$'0.00");
         TextView detailText = (TextView) findViewById(R.id.detailText);
         detailText.setText(p.toString());
         TextView donateDetailText = (TextView) findViewById(R.id.donateDetailText);
-        donateDetailText.setText("By selecting a charity, $" + df.format(donationPrice) + " will be donated. You will be charged a total of " + roundedPrice + ".");
+        donateDetailText.setText("By selecting a charity, " + df.format(donationPrice) + " will be donated. You will be charged a total of " + df.format(roundedPrice) + ".");
     }
 
     @Override
@@ -83,11 +93,14 @@ public class PayActivity extends Activity implements View.OnClickListener {
             double price;
             if (shouldDonate) {
                 price = roundedPrice;
+                Globals.totalDonations += donationPrice;
             }
             else {
                 price = productPrice;
             }
+
             processPayment(productPrice);
+            processPayment(roundedPrice);
             setResult(Activity.RESULT_OK, intent);
             finish();
         }
@@ -95,10 +108,74 @@ public class PayActivity extends Activity implements View.OnClickListener {
 
     private void processPayment(double price) {
         System.out.println(price);
-        if (shouldDonate) {
-            Globals.totalDonations += donationPrice;
-        }
+        final double fPrice = price;
 
+        FutureTask future = new FutureTask(new Callable() {
+            @Override
+            public Object call() throws Exception {
+                try {
+                    Unirest.setDefaultHeader("Content-Type", "application/json");
+                    Unirest.setDefaultHeader("licenseid", Vantiv.licenseid);
+                    JSONObject json = Vantiv.getBody(fPrice);
+                    Log.d("Vantiv", "sending auth");
+                    HttpResponse<JsonNode> authResponse = Unirest.post("https://apis.cert.vantiv.com/v1/credit/authorization")
+                            .queryString("sp", "1")
+                            .body(json.toString())
+                            .asJson();
+
+                    Log.d("Vantiv/AuthResponse", authResponse.getBody().toString());
+
+                    String authCode = Vantiv.getAuthorizationCodeFromResponse(authResponse);
+                    String refNumber = Vantiv.getReferenceNumberFromResponse(authResponse);
+
+                    json = Vantiv.getBody(fPrice);
+                    json.getJSONObject("transaction").put("OriginalReferenceNumber", refNumber);
+                    json.getJSONObject("transaction").put("AuthorizationCode", authCode);
+                    json.getJSONObject("transaction").put("OriginalAuthorizedAmount", fPrice);
+                    json.getJSONObject("transaction").put("CaptureAmount", fPrice);
+                    HttpResponse<JsonNode> captureResponse = Unirest.post("https://apis.cert.vantiv.com/v1/credit/authorizationcompletion")
+                            .queryString("sp", "1")
+                            .body(new JsonNode(json.toString()))
+                            .asJson();
+
+                    System.out.println("CaptureResponse: " + captureResponse.getBody().toString());
+
+
+                    // Send Purchase
+                    json = Vantiv.getBody(fPrice);
+                    HttpResponse<JsonNode> purchaseResponse = Unirest.post("https://apis.cert.vantiv.com/v1/credit")
+                            .queryString("sp", "1")
+                            .body(new JsonNode(json.toString()))
+                            .asJson();
+                    System.out.println("PurchaseResponse: " + captureResponse.getBody().toString());
+
+                    // Send Cancel
+                    authCode = Vantiv.getAuthorizationCodeFromResponse(purchaseResponse);
+                    refNumber = Vantiv.getReferenceNumberFromResponse(purchaseResponse);
+                    String transactionTimestamp = Vantiv.getTransmissionTimestampFromResponse(purchaseResponse);
+                    json = Vantiv.getBody(fPrice);
+                    json.getJSONObject("transaction").put("OriginalReferenceNumber", refNumber);
+                    json.getJSONObject("transaction").put("OriginalAuthCode", authCode);
+                    json.getJSONObject("transaction").put("OriginalTransactionTimestamp", transactionTimestamp);
+                    json.getJSONObject("transaction").put("CancelType", "purchase");
+
+                    HttpResponse<JsonNode> cancelResponse = Unirest.post("https://apis.cert.vantiv.com/v1/credit/reversal")
+                            .queryString("sp", "1")
+                            .body(new JsonNode(json.toString()))
+                            .asJson();
+
+                    System.out.println("CancelResponse: " + cancelResponse.getBody().toString());
+                } catch (Exception e) {
+                    Log.d("Vantiv Exception", e.toString());
+                    return false;
+                }
+                return true;
+            }
+        });
+
+
+        ExecutorService executor = Executors.newFixedThreadPool(1);
+        executor.execute(future);
     }
 
     private void toggleButton(Button button) {

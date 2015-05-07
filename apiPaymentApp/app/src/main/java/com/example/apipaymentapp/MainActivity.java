@@ -82,20 +82,9 @@ public class MainActivity extends Activity implements View.OnClickListener {
     
     public void updateTotal()
     {
-    	DecimalFormat df = new DecimalFormat("#.00");
+    	DecimalFormat df = new DecimalFormat("'$'0.00");
 
     	TextView totalDonationsText = (TextView) findViewById(R.id.totalDonationsText);
         totalDonationsText.setText("Total Donated: " + df.format(Globals.totalDonations));
     }
-    
-    public void payClicked(View v)
-    {
-    	//Do something magical
-    	
-    	//pass donationAmount and totalAmount to an AsyncTask I think
-    	
-    	
-    	
-    }
-    
 }
